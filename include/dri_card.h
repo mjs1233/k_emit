@@ -11,9 +11,11 @@ typedef struct {
     uint32_t connector_id;
     uint32_t encoder_id;
     uint32_t crtc_id;
+    int fd;
     struct drm_mode_modeinfo mode;
 } dri_card;
 
-int find_dri_card(dri_card* card);
+int open_dri_card(dri_card* card);
+void close_dri_card(dri_card* card);
 
 #endif //KURUMI_EMIT_DRI_CARD_H

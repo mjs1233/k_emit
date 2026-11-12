@@ -27,7 +27,7 @@ static bool check_drm_cap(int fd, const char* device_path);
 static bool check_drm_res(int fd, const char* device_path, uint32_t* connector_id);
 static bool select_drm_encoder(int fd, dri_card* card);
 
-int find_dri_card(dri_card* card) {
+int open_dri_card(dri_card* card) {
 
     DIR *dir = opendir(CARD_DIR);
     if (dir == NULL) {
@@ -81,6 +81,8 @@ int fill_card_properties(const char* device_path,dri_card* card) {
         close(fd);
         return -4;
     }
+
+    card->fd = fd;
 
     return 0;
 }
@@ -218,7 +220,7 @@ bool select_drm_encoder(int fd, dri_card* card) {
     struct drm_mode_modeinfo temp_mode = {0};
     struct drm_mode_get_connector conn = {
         .connector_id =  card->connector_id,
-        .modes_ptr = (uint64_t)(uintptr_t)&temp_mode,
+        .modes_ptr = (uintptr_t)&temp_mode,
         .count_modes = 1
     };
 
@@ -306,4 +308,9 @@ bool select_drm_encoder(int fd, dri_card* card) {
     errno = ENODEV;
     DRM_ENCODER_CLEAN_UP
     return false;
+}
+
+
+void close_dri_card(dri_card* card) {
+    close(card->fd);
 }

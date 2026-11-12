@@ -56,11 +56,29 @@ struct drm_mode_get_connector {
 };
 
 struct drm_mode_get_encoder {
-    uint32_t encoder_id;
-    uint32_t encoder_type;
-    uint32_t crtc_id;
-    uint32_t possible_crtcs;
-    uint32_t possible_clones;
+    __u32 encoder_id;
+    __u32 encoder_type;
+    __u32 crtc_id;
+    __u32 possible_crtcs;
+    __u32 possible_clones;
 };
 
+struct drm_mode_create_dumb {
+    __u32 height;
+    __u32 width;
+    __u32 bpp;
+    __u32 flags;
+    __u32 handle;
+    __u32 pitch;
+    __u32 size;
+};
+struct drm_mode_destroy_dumb {
+    __u32 handle;
+};
+
+struct drm_mode_map_dumb {
+    __u32 handle;
+    __u32 pad;
+    __u32 offset;
+};
 #endif //KURUMI_EMIT_DRM_ABI_H

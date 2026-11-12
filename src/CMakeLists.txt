@@ -3,4 +3,5 @@ PRIVATE
         main.c
         dri_card.c
         drm_io.c
+        drm_buffer.c
 )
